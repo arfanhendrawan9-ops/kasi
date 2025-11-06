@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Kasir</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://via.placeholder.com/1920x1080/2c3e50/ffffff?text=Restoran+Background') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .menu {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .menu-category {
+            width: 45%;
+            margin: 20px 0;
+        }
+        .menu-item {
+            background-color: #e7e7e7;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            width: 150px;
+            margin: 10px;
+        }
+        .menu-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .menu-item h3 {
+            margin: 10px 0;
+        }
+        .order-summary {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .login-form, .payment-form {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .input-field {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 200px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+        .qr-code {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .payment-options img {
+            width: 80px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .payment-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .struk {
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .payment-method {
+            display: inline-block;
+            margin: 10px;
+        }
+        .struk h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Login Form -->
+<div class="container" id="loginPage">
+    <div class="header">
+        <h1>Login Kasir</h1>
+    </div>
+    <div class="login-form">
+        <input type="text" id="kasirNameInput" class="input-field" placeholder="Masukkan Nama Kasir" required><br>
+        <button class="btn" onclick="login()">Masuk</button>
+    </div>
+</div>
+
+<!-- Menu Kasir Page -->
+<div class="container" id="menuPage" style="display: none;">
+    <div class="header">
+        <h1>Menu Kasir</h1>
+        <p>Nama Kasir: <span id="kasirName"></span> | Alamat: Jalan XYZ No. 123 | Telp: 08123456789</p>
+    </div>
+
+    <!-- Menu Makanan -->
+    <div class="menu-category">
+    <h2>Menu Makanan</h2>
+    <div class="menu">
+        <!-- Menu Makanan Biasa -->
+        <div class="menu-item" onclick="addToOrder('Nasi Goreng', 15000)">
+            <img src="https://asset.kompas.com/crops/VcgvggZKE2VHqIAUp1pyHFXXYCs=/202x66:1000x599/1200x800/data/photo/2023/05/07/6456a450d2edd.jpg" alt="Nasi Goreng">
+            <h3>Nasi Goreng</h3>
+            <p>Rp 15.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Mie Goreng', 12000)">
+            <img src="https://www.dapurkobe.co.id/wp-content/uploads/mie-goreng-korea.jpg" alt="Mie Goreng">
+            <h3>Mie Goreng</h3>
+            <p>Rp 12.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Ayam Bakar', 20000)">
+            <img src="https://image.idntimes.com/post/20230809/ins-saver-868477387-b92c30be9bda955e59d280759a6f55b9.jpg" alt="Ayam Bakar">
+            <h3>Ayam Bakar</h3>
+            <p>Rp 20.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Sate Ayam', 18000)">
+            <img src="https://img-global.cpcdn.com/recipes/a6ca9f36b02b089b/680x781cq80/sate-ayam-khas-madura-foto-resep-utama.jpg" alt="Sate Ayam">
+            <h3>Sate Ayam</h3>
+            <p>Rp 18.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('nasi kebuli', 13000)">
+            <img src="https://images.aws.nestle.recipes/original/a236b4fa9d45308bb9b57e46304ab5d9_ed-nasi-kebuli-ayam-kurma.png" alt="nasi kebuli">
+            <h3>nasi kebuli</h3>
+            <p>Rp 13.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Soto Ayam', 14000)">
+            <img src="https://healthybelly.s3.amazonaws.com/product/media_1738841131_0.webp" alt="Soto Ayam">
+            <h3>Soto Ayam</h3>
+            <p>Rp 14.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Nasi Uduk', 12000)">
+            <img src="https://asset-a.grid.id/crop/0x0:0x0/x/photo/2024/05/10/advjpg-20240510120902.jpg" alt="Nasi Uduk">
+            <h3>Nasi Uduk</h3>
+            <p>Rp 12.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('ayam madura', 15000)">
+            <img src= https://i.ytimg.com/vi/BubrLAs6KB4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLApMmZrZ1Sw3BywjcIHiStE17hf2g" alt="ayam madura">
+            <h3>ayam madura</h3>
+            <p>Rp 15.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Gado-Gado', 13000)">
+            <img src="https://i0.wp.com/resepkoki.id/wp-content/uploads/2017/02/Resep-Gado-Gado.jpg?fit=1920%2C1840&ssl=1" alt="Gado-Gado">
+            <h3>Gado-Gado</h3>
+            <p>Rp 13.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Mie Ayam', 12000)">
+            <img src="https://awsimages.detik.net.id/community/media/visual/2019/11/08/31ccb56c-5b9d-406c-935a-07570df3cda6.jpeg?w=600&q=90" alt="Mie Ayam">
+            <h3>Mie Ayam</h3>
+            <p>Rp 12.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('sushi', 8000)">
+            <img src="https://assets.jabarekspres.com/main/2022/03/sushi-g4d1e531a8_640.jpg" alt="sushi">
+            <h3>sushi</h3>
+            <p>Rp 8.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Rendang', 22000)">
+            <img src="https://www.astronauts.id/blog/wp-content/uploads/2023/03/Resep-Rendang-Daging-Sapi-Untuk-Lebaran-Gurih-dan-Nikmat-1024x683.jpg" alt="Rendang">
+            <h3>Rendang</h3>
+            <p>Rp 22.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Nasi Kuning', 13000)">
+            <img src="https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2023/07/26044232/ini-resep-nasi-kuning-wangi-nan-lezat-dengan-berbagai-lauk.jpg" alt="Nasi Kuning">
+            <h3>Nasi Kuning</h3>
+            <p>Rp 13.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Lontong Sayur', 11000)">
+            <img src="https://cdn.yummy.co.id/content-images/images/20230413/d7cac1b6382cee20fb848bd9f9b79180.jpg?x-oss-process=image/format,webp" alt="Lontong Sayur">
+            <h3>Lontong Sayur</h3>
+            <p>Rp 11.000</p>
+        </div>
+
+        <!-- Menu Hotel Bintang Lima -->
+        <div class="menu-item" onclick="addToOrder('Wagyu Steak ★★★★★', 95000)">
+            <img src="https://assets.farmison.com/images/recipe-detail-1380/64644-wagyu-beef-yakiniku-hero.jpg" alt="Wagyu Steak">
+            <h3>Wagyu Steak ★★★★★</h3>
+            <p>Rp 95.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Lobster Thermidor ★★★★★', 120000)">
+            <img src="https://www.wholesomeyum.com/wp-content/uploads/2023/09/wholesomeyum-Lobster-Thermidor-18.jpg" alt="Lobster Thermidor">
+            <h3>Lobster Thermidor ★★★★★</h3>
+            <p>Rp 120.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Salmon Teriyaki ★★★★★', 88000)">
+            <img src="https://sudachirecipes.com/wp-content/uploads/2021/05/teriyakisalmon-sq.jpg" alt="Salmon Teriyaki">
+            <h3>Salmon Teriyaki ★★★★★</h3>
+            <p>Rp 88.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Beef Wellington ★★★★★', 100000)">
+            <img src="https://www.foodandwine.com/thmb/2k2Kq24_fMvHCyLMPRSNrpg5QdE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/beef-wellington-FT-RECIPE0321-c9a63fccde3b45889ad78fdad078153f.jpg" alt="Beef Wellington">
+            <h3>Beef Wellington ★★★★★</h3>
+            <p>Rp 100.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Chicken Cordon Bleu ★★★★★', 75000)">
+            <img src="https://dcostseafood.id/wp-content/uploads/2025/04/Chicken-Cordon-Bleu.jpg" alt="Chicken Cordon Bleu">
+            <h3>Chicken Cordon Bleu ★★★★★</h3>
+            <p>Rp 75.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Grilled Tuna Steak ★★★★★', 85000)">
+            <img src="https://www.allrecipes.com/thmb/3XeRAECReO97MWjlcc3N366J4Ig=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/39455-marinated-tuna-steak-ddmfs-hero-1x2-0847-7f3695047a694908ad59a256103ca27e.jpg" alt="Grilled Tuna Steak">
+            <h3>Grilled Tuna Steak ★★★★★</h3>
+            <p>Rp 85.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Foie Gras ★★★★★', 135000)">
+            <img src="https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480_1_5x/img/recipe/ras/Assets/758a9cdb-5eaa-42d9-bba6-0940b520dcd1/Derivates/9f089fa0-c999-4f5c-9a8d-4d92821f6be1.jpg" alt="Foie Gras">
+            <h3>Foie Gras ★★★★★</h3>
+            <p>Rp 135.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Truffle Risotto ★★★★★', 90000)">
+            <img src="https://alwaysfromscratch.com/wp-content/uploads/2023/10/Mushroom-truffle-risotto-21.jpg" alt="Truffle Risotto">
+            <h3>Truffle Risotto ★★★★★</h3>
+            <p>Rp 90.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Duck Confit ★★★★★', 95000)">
+            <img src="https://images.squarespace-cdn.com/content/v1/5e299a1389b39b36aa0bc6e2/2a52da47-269b-4626-9830-40d6701ce738/Duck+Confit+2020+square.jpg" alt="Duck Confit">
+            <h3>Duck Confit ★★★★★</h3>
+            <p>Rp 95.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('King Prawn Curry ★★★★★', 92000)">
+            <img src="https://khinskitchen.com/wp-content/uploads/2022/07/prawn-curry-with-coconut-milk-07.jpg" alt="King Prawn Curry">
+            <h3>King Prawn Curry ★★★★★</h3>
+            <p>Rp 92.000</p>
+        </div>
+    </div>
+</div>
+
+    <!-- Menu Minuman -->
+    <div class="menu-category">
+    <h2>Menu Minuman</h2>
+    <div class="menu">
+        <!-- Menu Biasa -->
+        <div class="menu-item" onclick="addToOrder('Es Teh', 5000)">
+            <img src="https://asset.kompas.com/crops/9iB_ruTEMU7otPYnbCNVng8zhrQ=/0x0:4939x3293/1200x800/data/photo/2022/09/25/63300cfd403f0.jpg" alt="Es Teh">
+            <h3>Es Teh</h3>
+            <p>Rp 5.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Kopi', 8000)">
+            <img src="https://fnb.coffee/wp-content/uploads/elementor/thumbs/Delicious-Latte-Coffee-r684p63vb7d5r3czx2sxrz95pbdp9a2rztjsqe9vy8.webp" alt="Kopi">
+            <h3>Kopi</h3>
+            <p>Rp 8.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Jus Jeruk', 10000)">
+            <img src="https://cdn.antaranews.com/cache/1200x800/2018/04/jus.jpg" alt="Jus Jeruk">
+            <h3>Jus Jeruk</h3>
+            <p>Rp 10.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Teh Manis Panas', 6000)">
+            <img src="https://mtssunankalijogo.sch.id/wp-content/uploads/2020/11/es.jpg" alt="Teh Manis Panas">
+            <h3>Teh Manis Panas</h3>
+            <p>Rp 6.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Air Mineral', 4000)">
+            <img src="https://i0.wp.com/raisa.aeonstore.id/wp-content/uploads/2023/04/2541402.jpg?fit=800%2C800&ssl=1" alt="Air Mineral">
+            <h3>Air Mineral</h3>
+            <p>Rp 4.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Soda Gembira', 12000)">
+            <img src="https://www.herworld.co.id/gallery/teaser/Cara-Membuat-Es-Soda-Gembira_41_20180228172400.jpg" alt="Soda Gembira">
+            <h3>Soda Gembira</h3>
+            <p>Rp 12.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Jus Alpukat', 13000)">
+            <img src="https://res.cloudinary.com/dk0z4ums3/image/upload/v1708574230/attached_image/7-manfaat-jus-alpukat-bagi-kesehatan-yang-sayang-untuk-dilewatkan.jpg" alt="Jus Alpukat">
+            <h3>Jus Alpukat</h3>
+            <p>Rp 13.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Jus Mangga', 11000)">
+            <img src="https://img-global.cpcdn.com/recipes/539561beae7b8af3/680x781cq80/jus-mangga-kental-segar-foto-resep-utama.jpg" alt="Jus Mangga">
+            <h3>Jus Mangga</h3>
+            <p>Rp 11.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Es Coklat', 9000)">
+            <img src="https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/81/2024/09/10/WhatsApp-Image-2024-09-10-at-165729_d20ecc5b-3061382257.jpg" alt="Es Coklat">
+            <h3>Es Coklat</h3>
+            <p>Rp 9.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Lemon Tea', 8500)">
+            <img src="https://www.nestleprofessional.co.id/sites/default/files/styles/np_article_big/public/2023-11/4%20Kreasi%20Minuman%20dengan%20Bubuk%20Lemon%20Tea.jpg?h=ec041e41&itok=5VABpLHs" alt="Lemon Tea">
+            <h3>Lemon Tea</h3>
+            <p>Rp 8.500</p>
+        </div>
+
+        <!-- Menu Bintang Lima -->
+        <div class="menu-item" onclick="addToOrder('Matcha Latte ★★★★★', 25000)">
+            <img src="https://sprudge.com/wp-content/uploads/2017/06/little_roy_coffee_interior_matcha_latte_moe_gabr_07.jpg" alt="Matcha Latte">
+            <h3>Matcha Latte ★★★★★</h3>
+            <p>Rp 25.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Caramel Macchiato ★★★★★', 28000)">
+            <img src="https://www.allrecipes.com/thmb/LgtetzzQWH3GMxFISSii84XEAB8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/258686-IcedCaramelMacchiato-ddmps-4x3-104704-2effb74f7d504b8aa5fbd52204d0e2e5.jpg" alt="Caramel Macchiato">
+            <h3>Caramel Macchiato ★★★★★</h3>
+            <p>Rp 28.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Vanilla Frappe ★★★★★', 26000)">
+            <img src="https://bigtrain.com/cdn/shop/files/3644413f4b931a568d0ccf3e738b942292596e38.jpg?v=1721250015" alt="Vanilla Frappe">
+            <h3>Vanilla Frappe ★★★★★</h3>
+            <p>Rp 26.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Affogato ★★★★★', 30000)">
+            <img src="https://d1r9hss9q19p18.cloudfront.net/uploads/2017/03/affogato_1280x720-sumber-.jpg" alt="Affogato">
+            <h3>Affogato ★★★★★</h3>
+            <p>Rp 30.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Cold Brew Signature ★★★★★', 27000)">
+            <img src="https://projectkaapi.com/cdn/shop/files/0D0A4673.jpg?v=1742066904&width=1946" alt="Cold Brew">
+            <h3>Cold Brew Signature ★★★★★</h3>
+            <p>Rp 27.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Espresso Tonic ★★★★★', 29000)">
+            <img src="https://www.seriouseats.com/thmb/QURmUpsAcfJHjZYFmJMtUEO-2_g=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20240513-EspressoTonic-AmandaSuarez-36-7123b0f788514ad7854c2eb234d15c3b.jpg" alt="Espresso Tonic">
+            <h3>Espresso Tonic ★★★★★</h3>
+            <p>Rp 29.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Thai Tea Premium ', 24000)">
+            <img src="https://hot-thai-kitchen.com/wp-content/uploads/2023/09/Thai-tea-sq-500x500.png" alt="Thai Tea Premium">
+            <h3>Thai Tea Premium ★★★★★</h3>
+            <p>Rp 24.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Hazelnut Latte ', 26500)">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ58TeNo5zJEcFN4RSGaE-VHyy-XJGUEcgIqg&s" alt="Hazelnut Latte">
+            <h3>Hazelnut Latte ★★★★★</h3>
+            <p>Rp 26.500</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Red Velvet Drink ★★★★★', 25000)">
+            <img src="https://jesseatsandtravels.com/red-velvet-latte-recipe/" alt="Red Velvet Drink">
+            <h3>Red Velvet Drink ★★★★★</h3>
+            <p>Rp 25.000</p>
+        </div>
+        <div class="menu-item" onclick="addToOrder('Mocha Delight ★★★★★', 27000)">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS8iNTIAHgi5YcHwbcYPm1vRJWmX8vpl_F2Q&s" alt="Mocha Delight">
+            <h3>Mocha Delight ★★★★★</h3>
+            <p>Rp 27.000</p>
+        </div>
+    </div>
+</div>
+
+
+    <div class="order-summary">
+        <h3>Ringkasan Pesanan</h3>
+        <ul id="orderList"></ul>
+        <p>Total: Rp <span id="totalAmount">0</span></p>
+        <p>Pajak 10%: Rp <span id="taxAmount">0</span></p>
+        <p>Total Pembayaran: Rp <span id="finalAmount">0</span></p>
+
+        <button class="btn" onclick="proceedToPayment()">Bayar</button>
+    </div>
+</div>
+
+<!-- Payment Page -->
+<div class="container" id="paymentPage" style="display: none;">
+    <div class="header">
+        <h1>Halaman Pembayaran</h1>
+    </div>
+
+    <div class="payment-form">
+        <h3>Pilih Metode Pembayaran:</h3>
+        <div class="payment-options">
+            <div class="payment-method" onclick="makePayment('Dana')">
+                <img src="https://static.tildacdn.com/tild3466-3034-4261-b964-666531366236/jual-saldo-dana.png" alt="Dana">
+            </div>
+            <div class="payment-method" onclick="makePayment('GoPay')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRswlptkuFRfuREkl5ZAPJTgRYxAfmp00GvGQ&s" alt="GoPay">
+            </div>
+            <div class="payment-method" onclick="makePayment('OVO')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG_htMqWaryS1LXJ2_kDKbMr1E302jXoThPw&s" alt="OVO">
+            </div>
+            <div class="payment-method" onclick="makePayment('e-Wallet')">
+                <img src="https://www.exabytes.co.id/blog/wp-content/uploads/2024/03/Contoh-E-wallet-di-Indonesia.png" alt="e-Wallet">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Receipt -->
+<div class="container" id="receiptPage" style="display: none;">
+    <div class="struk">
+        <h3>Struk Pembelian</h3>
+        <p>Nama Kasir: <span id="receiptKasir"></span></p>
+        <p>Alamat: Jalan XYZ No. 123 | Telp: 08123456789</p>
+        <ul id="receiptOrderList"></ul>
+        <p>Total: Rp <span id="receiptTotalAmount">0</span></p>
+        <p>Pajak 10%: Rp <span id="receiptTaxAmount">0</span></p>
+        <p>Total Pembayaran: Rp <span id="receiptFinalAmount">0</span></p>
+        
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?data=1234567890&size=150x150" alt="QR Code">
+        </div>
+        <button class="btn" onclick="window.print()">Cetak Struk</button>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>&copy; 2025 Restoran XYZ</p>
+</div>
+
+<script>
+    let order = [];
+    let kasirName;
+
+    function login() {
+        kasirName = document.getElementById('kasirNameInput').value;
+
+        if (kasirName.trim() === '') {
+            alert('Nama kasir tidak boleh kosong!');
+        } else {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('menuPage').style.display = 'block';
+            document.getElementById('kasirName').textContent = kasirName;
+        }
+    }
+
+    function addToOrder(item, price) {
+        order.push({ item, price });
+        updateOrderSummary();
+    }
+
+    function updateOrderSummary() {
+        let orderList = document.getElementById('orderList');
+        let totalAmount = 0;
+        
+        orderList.innerHTML = '';
+        order.forEach(orderItem => {
+            let li = document.createElement('li');
+            li.textContent = orderItem.item + ' - Rp ' + orderItem.price;
+            orderList.appendChild(li);
+            totalAmount += orderItem.price;
+        });
+
+        let taxAmount = totalAmount * 0.1;
+        let finalAmount = totalAmount + taxAmount;
+
+        document.getElementById('totalAmount').textContent = totalAmount;
+        document.getElementById('taxAmount').textContent = taxAmount;
+        document.getElementById('finalAmount').textContent = finalAmount;
+    }
+
+    function proceedToPayment() {
+        document.getElementById('menuPage').style.display = 'none';
+        document.getElementById('paymentPage').style.display = 'block';
+    }
+
+    function makePayment(paymentMethod) {
+        alert('Pembayaran menggunakan: ' + paymentMethod);
+        printReceipt();
+    }
+
+    function printReceipt() {
+        document.getElementById('paymentPage').style.display = 'none';
+        document.getElementById('receiptPage').style.display = 'block';
+
+        let orderList = document.getElementById('receiptOrderList');
+        orderList.innerHTML = '';
+        
+        let totalAmount = 0;
+        order.forEach(orderItem => {
+            let li = document.createElement('li');
+            li.textContent = orderItem.item + ' - Rp ' + orderItem.price;
+            orderList.appendChild(li);
+            totalAmount += orderItem.price;
+        });
+
+        let taxAmount = totalAmount * 0.1;
+        let finalAmount = totalAmount + taxAmount;
+
+        document.getElementById('receiptKasir').textContent = kasirName;
+        document.getElementById('receiptTotalAmount').textContent = totalAmount;
+        document.getElementById('receiptTaxAmount').textContent = taxAmount;
+        document.getElementById('receiptFinalAmount').textContent = finalAmount;
+    }
+</script>
+
+</body>
+</html>
